@@ -1,0 +1,27 @@
+<html>
+    <body>
+        <div>
+            <b>Create new user:</b>
+            <form method="post" action="/">
+                <input type="text" name="name" placeholder="Input name">
+                <input type="text" name="message" placeholder="Message">
+                <button type="submit">Add</button>
+            </form>
+        </div>
+        <div>
+            <b>Find by name:</b>
+            <form method="post" action="filter">
+                <input type="text" name="filter">
+            </form>
+        </div>
+        <b>List of users</b>
+            {{#users}}
+            <div>
+            <b>{{id}}</b>
+            <span>{{name}}</span>
+            <span>{{message}}</span>
+            <a>{{time}}</a>
+            </div>
+            {{/users}}
+    </body>
+</html>
