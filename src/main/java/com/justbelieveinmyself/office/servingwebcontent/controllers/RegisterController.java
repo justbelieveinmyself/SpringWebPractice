@@ -23,17 +23,17 @@ public class RegisterController {
     }
     @PostMapping("/registration")
     public String registerNewUser(@RequestParam String username, @RequestParam String password, Map<String, Object> model){
-//        Optional<User> users = userRepository.findByName(name);
-//        if(users.isPresent()){
-//            model.put("message", "User with that name already exists!");
-//            return "registration";
-//        }
+        Optional<User> users = userRepository.findByName(username);
+        if(users.isPresent()){
+            model.put("message", "User with that name already exists!");
+            return "registration";
+        }
         User user = new User();
         user.setName(username);
         user.setPassword(password);
         user.setActive(true);
         user.setTime(LocalDateTime.now());
         userRepository.save(user);
-        return "home";
+        return "redirect:/login";
     }
 }

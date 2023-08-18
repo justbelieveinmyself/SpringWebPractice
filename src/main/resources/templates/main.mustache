@@ -10,29 +10,33 @@
             </form>
         </div>
         <div>
-            <b>Create new user:</b>
+            <b>Write new message:</b>
             <form method="post" action="/main">
-                <input type="text" name="name" placeholder="Input name">
-                <input type="text" name="message" placeholder="Message">
+                <input type="text" name="tag" placeholder="Tag">
+                <input type="text" name="text" placeholder="Message">
                 <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                 <button type="submit">Add</button>
             </form>
         </div>
-        <div>
-            <b>Find by name:</b>
-            <form method="post" action="filter">
-                <input type="text" name="filter">
-                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-            </form>
-        </div>
-        <b>List of users</b>
-            {{#users}}
+<!--        <div>-->
+<!--            <b>Search users:</b>-->
+<!--            <form method="post" action="/search">-->
+<!--                <input type="text" name="filter">-->
+<!--                <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>-->
+<!--            </form>-->
+<!--        </div>-->
+        <b>Messages:</b>
+            {{#messages}}
             <div>
-            <b>{{id}}</b>
-            <span>{{name}}</span>
-            <span>{{message}}</span>
-            <a>{{time}}</a>
+                <b>{{tag}}</b>
+                <span>{{authorName}}</span>
+                <span>{{text}}</span>
             </div>
-            {{/users}}
+            {{/messages}}
     </body>
+    <a href = "main">Main</a> </br>
+    <a href="/">Home</a> </br>
+    <a href = "test">Test</a> </br>
+    <a href = "login">Log in</a> </br>
+    <a href = "registration">Sign up</a> </br>
 </html>

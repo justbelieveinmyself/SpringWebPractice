@@ -16,9 +16,11 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(new String[]{"USER"}).map(SimpleGrantedAuthority::new).toList();
+        return user.getRoles();
     }
-
+    public User getUser(){
+        return user;
+    }
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -46,6 +48,6 @@ public class SecurityUser implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return user.isActive();
     }
 }

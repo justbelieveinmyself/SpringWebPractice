@@ -16,20 +16,30 @@ public class User {
     private String password;
     private boolean active;
     private LocalDateTime time;
-//    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
-//    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
-//    @Enumerated(EnumType.STRING)
-//    private Set<Role> roles;
+
+    @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
+    @Enumerated(EnumType.STRING)
+    private Set<Role> roles;
 
     public User(){}
 
-    public User(Long id, String name, String password, boolean active, LocalDateTime time) {
+    public User(Long id, String name, String password, boolean active, LocalDateTime time, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.password = password;
         this.active = active;
         this.time = time;
+        this.roles = roles;
+    }
 
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {
