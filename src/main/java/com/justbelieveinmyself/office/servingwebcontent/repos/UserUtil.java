@@ -1,4 +1,6 @@
-package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
+package com.justbelieveinmyself.office.servingwebcontent.repos;
+
+import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
 
 import java.util.Objects;
 
