@@ -1,5 +1,6 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
+import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Controller
 public class RegisterController {
@@ -33,6 +36,9 @@ public class RegisterController {
         user.setPassword(password);
         user.setActive(true);
         user.setTime(LocalDateTime.now());
+        HashSet<Role> roles = new HashSet<>();
+        roles.add(Role.USER);
+        user.setRoles(roles);
         userRepository.save(user);
         return "redirect:/login";
     }

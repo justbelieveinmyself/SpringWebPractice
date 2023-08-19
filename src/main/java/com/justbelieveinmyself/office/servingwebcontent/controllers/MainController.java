@@ -22,8 +22,8 @@ public class MainController {
     @Autowired
     private MessageRepository messageRepository;
     @GetMapping("/main")
-    public String main(Map<String, Object> model){
-        Iterable<Message> messages = messageRepository.findAll();
+    public String main(@RequestParam(required = false) String filter, Map<String, Object> model){
+        Iterable<Message> messages = (filter != null && !filter.isEmpty())? messageRepository.findByTag(filter) : messageRepository.findAll();
         model.put("messages", messages);
         return "main";
     }
@@ -39,20 +39,6 @@ public class MainController {
         model.put("messages", messages);
         return "main";
     }
-//    @PostMapping("/search")
-//    public String searchMessageByUsername(@RequestParam String filter, Map<String, Object> model){
-//        User user = new User();
-//        messageRepository.findByAuthor()
-//        model.put("messages", )
-//    }
-//    @PostMapping("filter")
-//    public String filter(@RequestParam String filter, Map<String, Object> model){
-////        Iterable<User> users = userRepository.findByMessage(filter);
-//        Iterable<User> users;
-//        users = filter != null && !filter.isEmpty()? userRepository.findByName(filter) : userRepository.findAll();
-//        model.put("users", users);
-//        return "main";
-//    }
     @GetMapping("/test")
     public String test(){
         return "test";

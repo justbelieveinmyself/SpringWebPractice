@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers(AntPathRequestMatcher.antMatcher( HttpMethod.POST,"/registration"), AntPathRequestMatcher.antMatcher( HttpMethod.GET,"/registration")).permitAll()
+                        .requestMatchers(AntPathRequestMatcher.antMatcher( HttpMethod.POST,"/registration"), AntPathRequestMatcher.antMatcher( HttpMethod.GET,"/registration"), AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/")).permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
                 .formLogin((form) -> form
