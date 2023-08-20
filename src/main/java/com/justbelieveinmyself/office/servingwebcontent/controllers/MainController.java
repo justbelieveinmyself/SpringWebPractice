@@ -25,6 +25,7 @@ public class MainController {
     public String main(@RequestParam(required = false) String filter, Map<String, Object> model){
         Iterable<Message> messages = (filter != null && !filter.isEmpty())? messageRepository.findByTag(filter) : messageRepository.findAll();
         model.put("messages", messages);
+        model.put("filter", filter);
         return "main";
     }
     @PostMapping("/main")

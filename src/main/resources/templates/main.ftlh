@@ -15,7 +15,7 @@
     </div>
     <b>Tag filter</b>
     <form method="get" action="/main">
-        <input type="text" name="filter">
+        <input type="text" name="filter" value="${filter!}">
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit">Search</button> </br>
     <b>Messages (author, tag, name):</b> </br>
@@ -32,4 +32,5 @@
     <a href = "test">Test</a> </br>
     <a href = "login">Log in</a> </br>
     <a href = "registration">Sign up</a> </br>
+    <a href = "user">Users and roles</a> </br>
 </@c.page>
