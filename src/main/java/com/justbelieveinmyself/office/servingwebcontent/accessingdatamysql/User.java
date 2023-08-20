@@ -32,7 +32,9 @@ public class User {
         this.time = time;
         this.roles = roles;
     }
-
+    public boolean isAdmin(){
+        return roles.contains(Role.ADMIN);
+    }
 
     public Set<Role> getRoles() {
         return roles;

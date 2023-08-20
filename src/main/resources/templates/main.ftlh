@@ -1,43 +1,45 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/login.ftlh" as l>
+
 <@c.page>
-<a href = "main">Main</a> </br>
-<a href="/">Home</a> </br>
-<a href = "test">Test</a> </br>
-<a href = "login">Log in</a> </br>
-<a href = "registration">Sign up</a> </br>
-<a href = "user">Users and roles</a> </br>
-<div>
-    <@l.logout/>
-</div>
-    <div>
-        <b>Write new message:</b>
-        <form method="post" action="/main" enctype="multipart/form-data">
-            <input type="text" name="tag" placeholder="Tag">
-            <input type="file" name="file">
-            <input type="text" name="text" placeholder="Message">
+    <div class="d-flex align-items-center">
+        <form method="get" action="/main" class="d-flex">
+            <input type="text" name="filter" class="form-control me-2" value="${filter!}" placeholder="Search by tag">
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-            <button type="submit">Add</button>
+            <button type="submit" class="btn btn-primary">Search</button>
         </form>
     </div>
-    <b>Tag filter</b>
-    <form method="get" action="/main">
-        <input type="text" name="filter" value="${filter!}">
-        <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-        <button type="submit">Search</button> </br>
-    <b>Messages (author, tag, name):</b> </br>
+    <a class="btn btn-primary my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        Write new message
+    </a>
+    <div class="collapse" id="collapseExample">
+        <div class="mb-3">
+            <form method="post" action="/main" enctype="multipart/form-data">
+                <input type="text" class="form-control" name="text" placeholder="Message">
+                <input type="text" class="form-control" name="tag" placeholder="Tag">
+                <div class="input-group">
+                    <input type="file" class="form-control" name="file" aria-describedby="inputGroupFileAddon04">
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </div>
+    </div>
+    <div class="row row-cols-3 g-3">
         <#list messages as message>
-            <div>
-                <b>${message.authorName}</b>
-                <span>${message.tag}</span>
-                <strong>${message.text}</strong>
-                <div>
-                    <#if message.filename??>
-                        <img src="/img/${message.filename}">
-                    </#if>
+            <div class="card py-2 mx-2" style="width: 18rem;height: auto;">
+                <#if message.filename??>
+                <img src="/img/${message.filename}" class="card-img-top">
+                </#if>
+                <div class="m-2">
+                    <span>${message.tag}</span>
+                    <strong>${message.text}</strong>
+                </div>
+                <div class="card-footer text-body-secondary">
+                    ${message.authorName}
                 </div>
             </div>
-        <#else> No messages </br>
+            <#else> No messages </br>
         </#list>
+    </div>
 
 </@c.page>
