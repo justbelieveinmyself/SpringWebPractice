@@ -13,14 +13,23 @@ public class Message {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User author;
+    private String filename;
     public Message(){}
 
-    public Message(Long id, String text, String tag, User author) {
-        this.id = id;
+    public Message(String text, String tag, User author) {
         this.text = text;
         this.tag = tag;
         this.author = author;
     }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
     public String getAuthorName(){
         return author != null ? author.getName() : "<none>";
     }

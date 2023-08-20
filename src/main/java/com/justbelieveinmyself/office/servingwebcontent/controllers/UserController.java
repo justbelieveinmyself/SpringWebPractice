@@ -38,6 +38,8 @@ public class UserController {
         Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         user.getRoles().clear();
         for (String key : form.keySet()) {
+            System.out.println(roles);
+            System.out.println(key);
             if(roles.contains(key)){
                 user.getRoles().add(Role.valueOf(key));
             }

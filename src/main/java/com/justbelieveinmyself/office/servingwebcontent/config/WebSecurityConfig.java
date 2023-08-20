@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.util.AntPathMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -23,7 +24,13 @@ public class WebSecurityConfig {
     }
 
     private final JpaUserDetailsService jpaUserDetailsService;
+    private AntPathRequestMatcher[] antPathRequestMatchers = new AntPathRequestMatcher[]{
+            AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/registration"),
+            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/registration"),
+            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/"),
+            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/static/**")
 
+    };
 
 
 
@@ -31,7 +38,7 @@ public class WebSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests((request) -> request
-                        .requestMatchers(AntPathRequestMatcher.antMatcher( HttpMethod.POST,"/registration"), AntPathRequestMatcher.antMatcher( HttpMethod.GET,"/registration"), AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/")).permitAll()
+                        .requestMatchers(antPathRequestMatchers).permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
                 .formLogin((form) -> form
