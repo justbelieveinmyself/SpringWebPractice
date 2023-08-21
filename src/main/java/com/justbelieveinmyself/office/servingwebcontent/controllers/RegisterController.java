@@ -1,45 +1,40 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
-import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
+import com.justbelieveinmyself.office.servingwebcontent.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 @Controller
 public class RegisterController {
     @Autowired
-    private UserRepository userRepository;
+    private JpaUserDetailsService jpaUserDetailsService;
     @GetMapping("/registration")
     public String register(){
         return "registration";
     }
     @PostMapping("/registration")
-    public String registerNewUser(@RequestParam String username, @RequestParam String password, Map<String, Object> model){
-        Optional<User> users = userRepository.findByName(username);
-        if(users.isPresent()){
+    public String registerNewUser(User user, Map<String, Object> model){
+        if(!jpaUserDetailsService.addUser(user)){
             model.put("message", "User with that name already exists!");
             return "registration";
         }
-        User user = new User();
-        user.setName(username);
-        user.setPassword(password);
-        user.setActive(true);
-        user.setTime(LocalDateTime.now());
-        HashSet<Role> roles = new HashSet<>();
-        roles.add(Role.USER);
-        user.setRoles(roles);
-        userRepository.save(user);
         return "redirect:/login";
+    }
+    @GetMapping("/activate/{code}")
+    public String activate(Model model, @PathVariable String code){
+        boolean isActivated = jpaUserDetailsService.activateUser(code);
+        if (isActivated){
+            model.addAttribute("message", "User successfully activated.");
+        }else{
+            model.addAttribute("message", "Activation code is not found!");
+        }
+        return "login";
     }
 }

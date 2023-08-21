@@ -1,7 +1,6 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.SecurityUser;
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class UserController {
     }
     @PostMapping
     public String userSave(@RequestParam String username, @RequestParam Map<String, String> form,@RequestParam("userId") User user){
-        user.setName(username);
+        user.setUsername(username);
         Set<String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
         user.getRoles().clear();
         for (String key : form.keySet()) {

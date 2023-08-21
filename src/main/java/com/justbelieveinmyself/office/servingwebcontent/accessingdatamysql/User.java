@@ -1,9 +1,7 @@
 package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
 
 import jakarta.persistence.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -12,7 +10,7 @@ import java.util.Set;
 public class User {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+    private String username;
     private String password;
     private boolean active;
     private LocalDateTime time;
@@ -21,12 +19,14 @@ public class User {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+    private String email;
+    private String activationCode;
 
     public User(){}
 
-    public User(Long id, String name, String password, boolean active, LocalDateTime time, Set<Role> roles) {
+    public User(Long id, String username, String password, boolean active, LocalDateTime time, Set<Role> roles) {
         this.id = id;
-        this.name = name;
+        this.username = username;
         this.password = password;
         this.active = active;
         this.time = time;
@@ -34,6 +34,22 @@ public class User {
     }
     public boolean isAdmin(){
         return roles.contains(Role.ADMIN);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
     }
 
     public Set<Role> getRoles() {
@@ -52,12 +68,12 @@ public class User {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

@@ -1,7 +1,6 @@
 package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
 
 import jakarta.persistence.*;
-import org.springframework.boot.autoconfigure.batch.BatchDataSource;
 
 @Entity
 @Table(name = "messages")
@@ -31,7 +30,7 @@ public class Message {
     }
 
     public String getAuthorName(){
-        return author != null ? author.getName() : "<none>";
+        return author != null ? author.getUsername() : "<none>";
     }
     public Long getId() {
         return id;

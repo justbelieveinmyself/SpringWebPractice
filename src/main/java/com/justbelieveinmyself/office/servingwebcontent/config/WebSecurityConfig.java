@@ -28,7 +28,9 @@ public class WebSecurityConfig {
             AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/registration"),
             AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/registration"),
             AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/"),
-            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/static/**")
+            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/static/**"),
+            AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/activate/*"),
+            AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/activate/*")
 
     };
 
