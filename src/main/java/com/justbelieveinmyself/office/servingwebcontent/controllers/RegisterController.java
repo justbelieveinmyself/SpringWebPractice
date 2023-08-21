@@ -2,14 +2,17 @@ package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
 import com.justbelieveinmyself.office.servingwebcontent.service.JpaUserDetailsService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class RegisterController {
@@ -20,9 +23,18 @@ public class RegisterController {
         return "registration";
     }
     @PostMapping("/registration")
-    public String registerNewUser(User user, Map<String, Object> model){
+    public String registerNewUser(@Valid User user, BindingResult bindingResult, Model model){
+        if(!Objects.equals(user.getPassword(), user.getPassword2())){
+            model.addAttribute("passwordError", "Passwords are different!");
+            return "registration";
+        }
+        if(bindingResult.hasErrors()){
+            Map<String, String> errorsMap = ControllerUtil.getErrorsMap(bindingResult);
+            model.mergeAttributes(errorsMap);
+            return "registration";
+        }
         if(!jpaUserDetailsService.addUser(user)){
-            model.put("message", "User with that name already exists!");
+            model.addAttribute("usernameError", "User with that name already exists!");
             return "registration";
         }
         return "redirect:/login";

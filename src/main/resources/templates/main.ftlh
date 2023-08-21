@@ -11,11 +11,23 @@
     <a class="btn btn-primary my-2" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Write new message
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse <#if message??>show</#if>" id="collapseExample">
         <div class="mb-3">
             <form method="post" action="/main" enctype="multipart/form-data">
-                <input type="text" class="form-control" name="text" placeholder="Message">
-                <input type="text" class="form-control" name="tag" placeholder="Tag">
+                <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}" value="<#if message??>${message.text}</#if>"
+                       name="text"  placeholder="Message">
+                <#if textError??>
+                <div class="invalid-feedback">
+                    ${textError}
+                </div>
+                </#if>
+                <input type="text" class="form-control ${(tagError??)?string('is-invalid', '')}" value="<#if message??>${message.tag}</#if>"
+                       name="tag" placeholder="Tag">
+                <#if tagError??>
+                    <div class="invalid-feedback">
+                        ${tagError}
+                    </div>
+                </#if>
                 <div class="input-group">
                     <input type="file" class="form-control" name="file" aria-describedby="inputGroupFileAddon04">
                 </div>

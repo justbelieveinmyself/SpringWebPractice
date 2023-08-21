@@ -1,6 +1,8 @@
 package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -13,8 +15,19 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Username can't be empty")
     private String username;
+    @Email(message = "Email is not correct")
+    @NotBlank(message = "Email can't be empty")
+    private String email;
+    @NotBlank(message = "Password can't be empty")
     private String password;
+
+
+
+    @NotBlank(message = "Password confirmation can't be empty")
+    @Transient
+    private String password2;
     private boolean active;
     private LocalDateTime time;
 
@@ -22,7 +35,6 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
-    private String email;
     private String activationCode;
 
     public User(){}
@@ -127,6 +139,12 @@ public class User implements UserDetails {
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
+    public String getPassword2() {
+        return password2;
+    }
 
+    public void setPassword2(String password2) {
+        this.password2 = password2;
+    }
 
 }

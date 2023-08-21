@@ -2,14 +2,17 @@ package com.justbelieveinmyself.office.servingwebcontent.service;
 
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
+import com.justbelieveinmyself.office.servingwebcontent.excepitons.UserNotFoundInDataBase;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import io.micrometer.common.util.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +24,9 @@ import java.util.stream.Collectors;
 public class JpaUserDetailsService implements UserDetailsService {
     private final UserRepository userRepository;
     private final MailSender mailSender;
+    @Autowired
+    @Lazy
+    private PasswordEncoder passwordEncoder;
     @Value("${site.port}")
     private String port;
     @Value("${site.domen}")
@@ -32,12 +38,15 @@ public class JpaUserDetailsService implements UserDetailsService {
         this.userRepository = userRepository;
         this.mailSender = mailSender;
     }
-
+    @Bean
+    public PasswordEncoder getPasswordEncoder(){
+        return new BCryptPasswordEncoder(8);
+    }
 
 
     public boolean addUser(User user){
-        Optional<User> users = userRepository.findByUsername(user.getUsername());
-        if(users.isPresent()){
+        User users = userRepository.findByUsername(user.getUsername());
+        if(users != null){
             return false;
         }
         user.setActive(true);
@@ -46,6 +55,7 @@ public class JpaUserDetailsService implements UserDetailsService {
         roles.add(Role.USER);
         user.setRoles(roles);
         user.setActivationCode(UUID.randomUUID().toString());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userRepository.save(user);
         sendActivationMessage(user);
         return true;
@@ -58,15 +68,13 @@ public class JpaUserDetailsService implements UserDetailsService {
             mailSender.send(user.getEmail(), "Activation code", message);
         }
     }
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
-                .orElseThrow(()-> new UsernameNotFoundException("Username not found: " + username));
-    }
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
+        User user = userRepository.findByUsername(username);
+        if(user == null){
+            throw new UserNotFoundInDataBase("User not found!");
+        }
+        return user;
     }
 
     public boolean activateUser(String code) {
