@@ -1,7 +1,6 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Message;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.SecurityUser;
 import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.MessageRepository;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
@@ -17,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Controller
@@ -37,12 +35,12 @@ public class MainController {
         return "main";
     }
     @PostMapping("/main")
-    public String addMessage(@AuthenticationPrincipal SecurityUser user
+    public String addMessage(@AuthenticationPrincipal User user
             , @RequestParam String text
             , @RequestParam String tag
             , Map<String, Object> model
             , @RequestParam("file") MultipartFile file) throws IOException {
-        Message message = new Message(text, tag, user.getUser());
+        Message message = new Message(text, tag, user);
         if(file != null && !file.getOriginalFilename().isEmpty()){
             File uploadDir = new File(uploadPath);
             if(!uploadDir.exists()){
