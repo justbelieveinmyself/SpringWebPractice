@@ -59,9 +59,16 @@
                     </div>
                 </#if>
             </div>
+        <#else>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="remember-me" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Remember me!
+                </label>
+            </div>
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-<button type="submit" class="btn btn-primary mb-2"><#if isRegisterForm>Create<#else>Sign in</#if></button> </br>
+        <button type="submit" class="btn btn-primary mb-2"><#if isRegisterForm>Create<#else>Sign in</#if></button> </br>
         <#if !isRegisterForm><a href = "registration">No account?</a></#if>
 </form>
 </#macro>
