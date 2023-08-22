@@ -1,7 +1,7 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Message;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
+import com.justbelieveinmyself.office.servingwebcontent.domain.Message;
+import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.MessageRepository;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import jakarta.validation.Valid;
@@ -11,7 +11,6 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,11 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {

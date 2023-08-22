@@ -5,4 +5,5 @@
 <div class="mb-1"><b>Registration (user)</b></div>
 ${message!" " }
 <@l.login "/registration" true/>
+
 </@c.page>

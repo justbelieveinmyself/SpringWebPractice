@@ -51,9 +51,17 @@
                 </#if>
                 </div>
             </div>
+            <div class="col-sm-6">
+                <div class="g-recaptcha" data-sitekey="6LfAwscnAAAAAFWMQwWo0TiAICug7xAf1act_YZj"></div>
+                <#if captchaError??>
+                    <div class="alert alert-danger" role="alert">
+                        ${captchaError}
+                    </div>
+                </#if>
+            </div>
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
-<button type="submit" class="btn btn-primary mb-2""><#if isRegisterForm>Create<#else>Sign in</#if></button> </br>
+<button type="submit" class="btn btn-primary mb-2"><#if isRegisterForm>Create<#else>Sign in</#if></button> </br>
         <#if !isRegisterForm><a href = "registration">No account?</a></#if>
 </form>
 </#macro>

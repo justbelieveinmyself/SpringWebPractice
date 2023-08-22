@@ -1,7 +1,7 @@
 package com.justbelieveinmyself.office.servingwebcontent.repos;
 
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Message;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
+import com.justbelieveinmyself.office.servingwebcontent.domain.Message;
+import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

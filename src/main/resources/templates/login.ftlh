@@ -2,16 +2,17 @@
 <#import "parts/login.ftlh" as l>
 
 <@c.page>
-    ${message!" " }
+    <#if message??>
+        <div class="alert alert-primary" role="alert">
+            ${message}
+        </div>
+    </#if>
 
     <@l.login "/login" false/>
-<#if SPRING_SECURITY_LAST_EXCEPTION??>
-<div class="alert alert-primary" role="alert">
-    ${SPRING_SECURITY_LAST_EXCEPTION.message}
-</div>
-</#if>
-
-
-
+    <#if SPRING_SECURITY_LAST_EXCEPTION??>
+        <div class="alert alert-danger" role="alert">
+            ${SPRING_SECURITY_LAST_EXCEPTION.message}
+        </div>
+    </#if>
 
 </@c.page>

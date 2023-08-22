@@ -1,4 +1,4 @@
-package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
+package com.justbelieveinmyself.office.servingwebcontent.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -22,12 +22,6 @@ public class User implements UserDetails {
     private String email;
     @NotBlank(message = "Password can't be empty")
     private String password;
-
-
-
-    @NotBlank(message = "Password confirmation can't be empty")
-    @Transient
-    private String password2;
     private boolean active;
     private LocalDateTime time;
 
@@ -139,12 +133,6 @@ public class User implements UserDetails {
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
-    public String getPassword2() {
-        return password2;
-    }
 
-    public void setPassword2(String password2) {
-        this.password2 = password2;
-    }
 
 }

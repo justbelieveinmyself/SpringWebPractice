@@ -1,7 +1,7 @@
 package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
+import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
+import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.service.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,4 +1,4 @@
-package com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql;
+package com.justbelieveinmyself.office.servingwebcontent.domain;
 
 import org.springframework.security.core.GrantedAuthority;
 

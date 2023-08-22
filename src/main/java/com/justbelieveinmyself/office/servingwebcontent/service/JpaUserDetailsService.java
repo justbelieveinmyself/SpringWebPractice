@@ -1,8 +1,7 @@
 package com.justbelieveinmyself.office.servingwebcontent.service;
 
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.Role;
-import com.justbelieveinmyself.office.servingwebcontent.accessingdatamysql.User;
-import com.justbelieveinmyself.office.servingwebcontent.excepitons.UserNotFoundInDataBase;
+import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
+import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +71,7 @@ public class JpaUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
         if(user == null){
-            throw new UserNotFoundInDataBase("User not found!");
+            throw new UsernameNotFoundException("User not found!");
         }
         return user;
     }
