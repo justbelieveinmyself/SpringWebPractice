@@ -6,32 +6,31 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpMethod;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.RememberMeServices;
-import org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationFilter;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentRememberMeToken;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig {
+    @Lazy
+    private final JpaUserDetailsService jpaUserDetailsService;
+    @Autowired
+    private DataSource dataSource;
     public WebSecurityConfig(JpaUserDetailsService jpaUserDetailsService) {
         this.jpaUserDetailsService = jpaUserDetailsService;
     }
-    @Lazy
-    private final JpaUserDetailsService jpaUserDetailsService;
-//    @Autowired
-//    @Lazy
-//    private RememberMeServices rememberMeServices;
+
     private AntPathRequestMatcher[] antPathRequestMatchers = new AntPathRequestMatcher[]{
             AntPathRequestMatcher.antMatcher(HttpMethod.POST,"/registration"),
             AntPathRequestMatcher.antMatcher(HttpMethod.GET,"/registration"),
@@ -50,7 +49,9 @@ public class WebSecurityConfig {
                         .requestMatchers(antPathRequestMatchers).permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaUserDetailsService)
-                .rememberMe(Customizer.withDefaults())
+                .rememberMe(remember -> {
+                    remember.tokenRepository(getPersistentTokenRepository()).tokenValiditySeconds(24 * 60 * 60).key("adminloh123haha");
+                })
                 .formLogin((form) -> form
                         .loginPage("/login").permitAll()
                 ).logout((logout) -> logout.permitAll());
@@ -58,16 +59,11 @@ public class WebSecurityConfig {
         return http.exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(((request, response, accessDeniedException) -> accessDeniedException.printStackTrace()))).build();
     }
 
-//    @Bean
-//    RememberMeServices getRememberMeServices(){
-//        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("spring", jpaUserDetailsService);
-//        rememberMeServices.s
-//        rememberMeServices.setTokenValiditySeconds(120);
-//        return rememberMeServices;
-//    }
-//    @Bean
-//    RememberMeAuthenticationFilter rememberMeAuthenticationFilter(){
-//        RememberMeAuthenticationFilter rememberMeFilter = new RememberMeAuthenticationFilter();
-//
-//    }
+    public PersistentTokenRepository getPersistentTokenRepository(){
+        JdbcTokenRepositoryImpl tokenRepository = new JdbcTokenRepositoryImpl();
+        tokenRepository.setDataSource(dataSource);
+        return tokenRepository;
+    }
+
+
 }
