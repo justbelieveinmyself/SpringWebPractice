@@ -10,25 +10,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
-
 @Controller
 public class RegisterController {
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
     @Value("${recaptcha.secret}")
     private String secret;
-    @Autowired
-    private RestTemplate restTemplate;
-    @Autowired
-    private JpaUserDetailsService jpaUserDetailsService;
+    private final RestTemplate restTemplate;
+    private final JpaUserDetailsService jpaUserDetailsService;
+
+    public RegisterController(RestTemplate restTemplate, JpaUserDetailsService jpaUserDetailsService) {
+        this.restTemplate = restTemplate;
+        this.jpaUserDetailsService = jpaUserDetailsService;
+    }
+
     @GetMapping("/registration")
     public String register(){
         return "registration";
