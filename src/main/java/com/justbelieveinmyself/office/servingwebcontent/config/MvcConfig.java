@@ -22,8 +22,5 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
     }
 
-    @Bean
-    public RestTemplate getRestTemplate(){
-        return new RestTemplate();
-    }
+
 }

@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.rememberme.PersistentReme
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 
 import javax.sql.DataSource;
 
@@ -65,5 +66,8 @@ public class WebSecurityConfig {
         return tokenRepository;
     }
 
-
+    @Bean
+    public RestTemplate getRestTemplate(){
+        return new RestTemplate();
+    }
 }
