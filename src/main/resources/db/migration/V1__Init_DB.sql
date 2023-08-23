@@ -23,6 +23,13 @@ create table users (
     primary key (id))
     engine=InnoDB;
 
+create table if not exists persistent_logins (
+  username varchar(100) not null,
+  series varchar(64) primary key,
+  token varchar(64) not null,
+  last_used timestamp not null)
+  engine=InnoDB;
+
 alter table messages
     add constraint message_user_fk
     foreign key (user_id) references users (id);
@@ -30,3 +37,6 @@ alter table messages
 alter table user_role
     add constraint user_role_user_fk
     foreign key (user_id) references users (id);
+
+INSERT IGNORE INTO users (id, active, time, email, password, username) values (1, true, NOW(), 'seakme.vadim11@mail.ru', '$2a$08$TlFg0VuU6vy62wQG1JKRe.B1PD1clJ4fpReceKRg/6qrXHDwqTx4u', 'admin');
+INSERT IGNORE INTO user_role (user_id, roles) values (1, 'USER'), (1, 'ADMIN');

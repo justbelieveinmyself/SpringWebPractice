@@ -26,12 +26,9 @@ public class JpaUserDetailsService implements UserDetailsService {
     @Autowired
     @Lazy
     private PasswordEncoder passwordEncoder;
-    @Value("${site.port}")
-    private String port;
-    @Value("${site.domen}")
-    private String domen;
-    @Value("${site.protocol}")
-    private String protocol;
+    @Value("${site.hostname}")
+    private String hostname;
+
 
     public JpaUserDetailsService(UserRepository userRepository, MailSender mailSender) {
         this.userRepository = userRepository;
@@ -62,8 +59,8 @@ public class JpaUserDetailsService implements UserDetailsService {
 
     private void sendActivationMessage(User user) {
         if(!StringUtils.isEmpty(user.getEmail())){
-            String message = String.format("Hello, %s! \n" + "Welcome to Office. Please, visit next link: %s://%s:%s/activate/%s"
-                    , user.getUsername(), protocol, domen, port, user.getActivationCode());
+            String message = String.format("Hello, %s! \n" + "Welcome to Office. Please, visit next link: %s/activate/%s"
+                    , user.getUsername(), hostname, user.getActivationCode());
             mailSender.send(user.getEmail(), "Activation code", message);
         }
     }
