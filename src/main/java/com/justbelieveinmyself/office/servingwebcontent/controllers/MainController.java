@@ -38,6 +38,7 @@ public class MainController {
         Iterable<Message> messages = (filter != null && !filter.isEmpty())? messageRepository.findByTag(filter) : messageRepository.findAll();
         model.put("messages", messages);
         model.put("filter", filter);
+        model.put("page", "main");
         return "main";
     }
     @PostMapping("/main")
@@ -58,6 +59,7 @@ public class MainController {
         }
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
+        model.addAttribute("page", "main");
         return "main";
     }
 
@@ -94,6 +96,7 @@ public class MainController {
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
+        model.addAttribute("page", "messageEdit");
         return "userMessages";
     }
     @PostMapping("/user-messages/{user}")

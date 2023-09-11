@@ -58,10 +58,10 @@
             <version>3.0.4</version>
         </dependency>
         <!--    FlyWayDb      -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-mysql</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.flywaydb</groupId>-->
+<!--            <artifactId>flyway-mysql</artifactId>-->
+<!--        </dependency>-->
         <!--    Validation      -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
