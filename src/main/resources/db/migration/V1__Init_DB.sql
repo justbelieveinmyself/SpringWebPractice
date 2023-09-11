@@ -23,7 +23,7 @@ create table users (
     primary key (id))
     engine=InnoDB;
 
-create table if not exists persistent_logins (
+create table persistent_logins (
   username varchar(100) not null,
   series varchar(64) primary key,
   token varchar(64) not null,
