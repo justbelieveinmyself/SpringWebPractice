@@ -28,14 +28,14 @@ public class User implements UserDetails {
     private LocalDateTime time;
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
             joinColumns = { @JoinColumn(name = "channel_id")},
             inverseJoinColumns = { @JoinColumn(name = "subscriber_id")})
     private Set<User> subscribers = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_subscriptions",
             joinColumns = { @JoinColumn(name = "subscriber_id")},
