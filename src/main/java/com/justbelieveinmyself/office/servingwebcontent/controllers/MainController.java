@@ -38,6 +38,7 @@ public class MainController {
         Iterable<Message> messages = (filter != null && !filter.isEmpty())? messageRepository.findByTag(filter) : messageRepository.findAll();
         model.put("messages", messages);
         model.put("filter", filter);
+        model.put("page", "main");
         return "main";
     }
     @PostMapping("/main")
