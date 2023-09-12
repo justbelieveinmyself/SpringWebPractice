@@ -5,7 +5,7 @@
 <div class="collapse <#if message??>show</#if>" id="collapseExample">
     <div class="mb-3">
         <form method="post" enctype="multipart/form-data">
-            <input type="text" name="_csrf" value="${_csrf.token}"/>
+            <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <input type="text" class="form-control ${(textError??)?string('is-invalid', '')}" value="<#if message??>${message.text}</#if>"
                    name="text"  placeholder="Message"/>
             <#if textError??>
@@ -24,7 +24,10 @@
                 <input type="file" class="form-control" name="file" aria-describedby="inputGroupFileAddon04"/>
             </div>
             <input type="hidden" name="id" value="<#if message?? && message.id??>${message.id}</#if>"/>
-            <button type="submit" class="btn btn-primary">Save</button>
+            <#if (message?? && message.id??) || (page?? && page == "main")>
+                <button type="submit" class="btn btn-primary">Save</button>
+            <#else> <div>Choose file to edit!</div>
+            </#if>
         </form>
     </div>
 </div>
