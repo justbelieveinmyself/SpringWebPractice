@@ -23,7 +23,6 @@ create table if not exists  users  (
     primary key (id))
     engine=InnoDB;
 
-
 alter table messages
     add constraint message_user_fk
     foreign key (user_id) references users (id);
