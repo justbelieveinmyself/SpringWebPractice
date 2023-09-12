@@ -93,12 +93,17 @@ public class MainController {
             , Model model
             , @RequestParam(required = false) Message message){
         Set<Message> messages = user.getMessages();
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));
         model.addAttribute("page", "messageEdit");
         return "userMessages";
     }
+
     @PostMapping("/user-messages/{user}")
     public String editMessage(
             @AuthenticationPrincipal User currentUser
@@ -123,4 +128,5 @@ public class MainController {
         }
         return "redirect:/user-messages/" + user;
     }
+
 }
