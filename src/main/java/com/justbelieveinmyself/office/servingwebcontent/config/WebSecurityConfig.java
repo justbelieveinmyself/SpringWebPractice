@@ -54,7 +54,7 @@ public class WebSecurityConfig {
                     remember.tokenRepository(getPersistentTokenRepository()).tokenValiditySeconds(24 * 60 * 60).key("adminloh123haha");
                 })
                 .formLogin((form) -> form
-                        .loginPage("/login").permitAll()
+                        .loginPage("/login").permitAll().defaultSuccessUrl("/main")
                 ).logout((logout) -> logout.permitAll());
 
         return http.exceptionHandling(exceptionHandling -> exceptionHandling.accessDeniedHandler(((request, response, accessDeniedException) -> accessDeniedException.printStackTrace()))).build();
