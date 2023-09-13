@@ -3,7 +3,7 @@
 <@c.page>
     <div class="d-flex align-items-center">
         <form method="get" action="/main" class="d-flex">
-            <input type="text" name="filter" class="form-control me-2" value="${filter!}" placeholder="Search by tag">
+            <input type="text" name="filter" class="form-control me-2" value="${filter!}" placeholder="Search by tag"/>
             <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <button type="submit" class="btn btn-primary">Search</button>
         </form>
