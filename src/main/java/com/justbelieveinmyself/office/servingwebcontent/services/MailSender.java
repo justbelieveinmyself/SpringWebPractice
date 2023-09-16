@@ -1,8 +1,7 @@
-package com.justbelieveinmyself.office.servingwebcontent.service;
+package com.justbelieveinmyself.office.servingwebcontent.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.MailMessage;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;

@@ -24,7 +24,7 @@
                 <input type="file" class="form-control" name="file" aria-describedby="inputGroupFileAddon04"/>
             </div>
             <input type="hidden" name="id" value="<#if message?? && message.id??>${message.id}</#if>"/>
-            <#if (message?? && message.id??) || (page?? && page == "main")>
+            <#if (message?? && message.id??) || (url?? && url == "/main")>
                 <button type="submit" class="btn btn-primary">Save</button>
             <#else> <div>Choose file to edit!</div>
             </#if>

@@ -1,6 +1,10 @@
 <#include "security.ftlh"/>
+<#import "pager.ftlh" as p>
+<@p.pager url page />
+
+
 <div class="row row-cols-3 g-3" id="message-list">
-    <#list messages as message>
+    <#list page.getContent() as message>
     <div class="card py-2 mx-2" data-id="${message.id}" style="width: 18rem;height: auto;">
         <#if message.filename??>
             <img src="/img/${message.filename}" class="card-img-top"/>
@@ -21,3 +25,4 @@
     <#else> <br> No messages </br>
     </#list>
 </div>
+<@p.pager url page/>

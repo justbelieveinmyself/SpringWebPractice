@@ -2,7 +2,7 @@ package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;
-import com.justbelieveinmyself.office.servingwebcontent.service.JpaUserDetailsService;
+import com.justbelieveinmyself.office.servingwebcontent.services.JpaUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

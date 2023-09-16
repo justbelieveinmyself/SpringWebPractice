@@ -2,10 +2,9 @@ package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.domain.dto.CaptchaResponseDto;
-import com.justbelieveinmyself.office.servingwebcontent.service.JpaUserDetailsService;
+import com.justbelieveinmyself.office.servingwebcontent.services.JpaUserDetailsService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

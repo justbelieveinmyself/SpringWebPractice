@@ -1,4 +1,4 @@
-package com.justbelieveinmyself.office.servingwebcontent.service;
+package com.justbelieveinmyself.office.servingwebcontent.services;
 
 import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;

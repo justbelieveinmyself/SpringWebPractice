@@ -1,4 +1,4 @@
-package com.justbelieveinmyself.office.servingwebcontent;
+package com.justbelieveinmyself.office.servingwebcontent.controllers;
 
 import org.hamcrest.Matchers;
 import org.junit.Test;

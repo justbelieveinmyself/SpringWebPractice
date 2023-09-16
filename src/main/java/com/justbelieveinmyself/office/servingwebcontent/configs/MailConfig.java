@@ -1,6 +1,5 @@
-package com.justbelieveinmyself.office.servingwebcontent.config;
+package com.justbelieveinmyself.office.servingwebcontent.configs;
 
-import com.justbelieveinmyself.office.servingwebcontent.service.MailSender;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
