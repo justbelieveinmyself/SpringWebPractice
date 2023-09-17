@@ -5,6 +5,7 @@ import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.MessageRepository;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
+import com.justbelieveinmyself.office.servingwebcontent.services.MessageService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ import java.util.*;
 public class MainController {
     @Autowired
     private MessageRepository messageRepository;
+    @Autowired
+    private MessageService messageService;
     @Value("${upload.path}")
     private String uploadPath;
 
@@ -40,7 +43,8 @@ public class MainController {
     public String main(@RequestParam(required = false) String filter
             , Map<String, Object> model
             , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-        Page<Message> page = (filter != null && !filter.isEmpty())? messageRepository.findByTag(filter, pageable) : messageRepository.findAll(pageable);
+
+        Page<Message> page = messageService.getMessageList(filter, pageable);
         model.put("page", page);
         model.put("url", "/main");
         model.put("filter", filter);
@@ -61,9 +65,9 @@ public class MainController {
         }else {
             saveFile(message, file);
             model.addAttribute("message", null);
-            messageRepository.save(message);
+            messageService.save(message);
         }
-        Page<Message> messages = messageRepository.findAll(pageable);
+        Page<Message> messages = messageService.getMessageList(null, pageable);
         model.addAttribute("page", messages);
         model.addAttribute("url", "/main");
         return "main";
@@ -99,7 +103,7 @@ public class MainController {
             , Model model
             , @RequestParam(required = false) Message message
             , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-        Page<Message> page = messageRepository.findByAuthor(user, pageable);
+        Page<Message> page = messageService.findByAuthor(user, pageable);
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
         model.addAttribute("subscribersCount", user.getSubscribers().size());
@@ -131,7 +135,7 @@ public class MainController {
             if(!file.isEmpty()) {
                 saveFile(message, file);
             }
-            messageRepository.save(message);
+            messageService.save(message);
         }
         return "redirect:/user-messages/" + user;
     }
