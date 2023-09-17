@@ -99,8 +99,7 @@ public class MainController {
             , Model model
             , @RequestParam(required = false) Message message
             , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-        Set<Message> messages = user.getMessages();
-        Page<Message> page = new PageImpl<>(messages.stream().toList(), pageable, messages.size());
+        Page<Message> page = messageRepository.findByAuthor(user, pageable);
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
         model.addAttribute("subscribersCount", user.getSubscribers().size());
