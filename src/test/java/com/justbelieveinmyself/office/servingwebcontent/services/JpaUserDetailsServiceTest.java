@@ -4,7 +4,7 @@ import com.justbelieveinmyself.office.servingwebcontent.domain.Role;
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.repos.UserRepository;
 import org.hamcrest.CoreMatchers;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentMatcher;
 import org.mockito.ArgumentMatchers;
@@ -24,7 +24,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @TestPropertySource("/application-test.properties")
-class JpaUserDetailsServiceTest {
+public class JpaUserDetailsServiceTest {
     @MockBean
     private UserRepository userRepository;
     @MockBean
@@ -34,7 +34,7 @@ class JpaUserDetailsServiceTest {
     @Autowired
     private JpaUserDetailsService jpaUserDetailsService;
     @Test
-    void addUser() {
+    public void addUser() {
         User user = new User();
 
         user.setActive(false);
@@ -52,7 +52,7 @@ class JpaUserDetailsServiceTest {
         );
     }
     @Test
-    void addAlreadyExistUser(){
+    public void addAlreadyExistUser(){
         User user = new User();
         user.setUsername("Vadim");
 
@@ -70,7 +70,7 @@ class JpaUserDetailsServiceTest {
     }
 
     @Test
-    void activateUser() {
+    public void activateUser() {
         User user = new User();
         user.setActivationCode("12345");
         Mockito.doReturn(user).when(userRepository).findByActivationCode("12345");
@@ -82,7 +82,7 @@ class JpaUserDetailsServiceTest {
 
     }
     @Test
-    void activateUserNoSuchActivationCode() {
+    public void activateUserNoSuchActivationCode() {
         String fakeActivationCode = "123";
         Mockito.doReturn(null).when(userRepository).findByActivationCode(fakeActivationCode);
         boolean isActivated = jpaUserDetailsService.activateUser(fakeActivationCode);

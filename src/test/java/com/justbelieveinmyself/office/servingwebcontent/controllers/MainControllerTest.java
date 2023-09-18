@@ -58,9 +58,8 @@ public class MainControllerTest {
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
                 .andExpect(xpath("//*[@id='message-list']/div").nodeCount(6))
                 .andExpect(xpath("//*[@id='message-list']/div[@data-id='10']").exists())
-                .andExpect(xpath("//*[@id='message-list']/div[@data-id='10']/div[1]/strong").string(testMessage))
-                .andExpect(xpath("//*[@id='message-list']/div[@data-id='10']/div[1]/br/span").string("#" + testTag));
-
+                .andExpect(xpath("//*[@id='message-list']/div[@data-id='10']/div/div[1]/p").string(testMessage))
+                .andExpect(xpath("//*[@id='message-list']/div[@data-id='10']/div/div[1]/h5/br/span").string("#" + testTag));
     }
     @Test
     public void filterByTagTest() throws Exception{
