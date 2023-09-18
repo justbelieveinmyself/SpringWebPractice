@@ -1,5 +1,6 @@
 package com.justbelieveinmyself.office.servingwebcontent.domain;
 
+import com.justbelieveinmyself.office.servingwebcontent.domain.util.MessageHelper;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
@@ -10,6 +11,8 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "messages")
@@ -26,6 +29,13 @@ public class Message {
     private User author;
     private String filename;
     private LocalDateTime time;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "message_likes",
+            joinColumns = { @JoinColumn(name = "message_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id")}
+    )
+    private Set<User> likes = new HashSet<>();
     public Message(){}
 
     public Message(String text, String tag, User author) {
@@ -37,17 +47,11 @@ public class Message {
     public LocalDateTime getTime() {
         return time;
     }
-//    public String getTimeFromLastUpdate(){
-//        ZoneId zoneId = ZoneId.systemDefault();
-//        Long timeBetween = LocalDateTime.now().atZone(zoneId).toEpochSecond() - getTime().atZone(zoneId).toEpochSecond();
-//        LocalDateTime.ofEpochSecond(timeBetween, timeBetween, zoneId);
-//
-//    }
     public void setTime(LocalDateTime time) {
         this.time = time;
     }
     public String getFormattedTime(){
-        return getTime() == null?"none":getTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
+        return MessageHelper.getFormattedTime(getTime());
     }
 
     public String getFilename() {
@@ -91,5 +95,13 @@ public class Message {
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 }

@@ -4,6 +4,7 @@ create table if not exists user_subscriptions (
     primary key (subscriber_id, channel_id))
     engine=InnoDB;
 
+
 create table if not exists persistent_logins (
     username varchar(100) not null,
     series varchar(64) primary key,
