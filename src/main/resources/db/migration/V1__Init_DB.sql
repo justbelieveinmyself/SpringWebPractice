@@ -4,6 +4,7 @@ create table if not exists  messages (
     filename varchar(255),
     tag varchar(255),
     text varchar(2048) not null,
+    time datetime(6),
     primary key (id))
     engine=InnoDB;
 

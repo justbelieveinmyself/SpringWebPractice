@@ -4,6 +4,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Date;
+
 @Entity
 @Table(name = "messages")
 public class Message {
@@ -18,12 +25,29 @@ public class Message {
     @JoinColumn(name = "user_id")
     private User author;
     private String filename;
+    private LocalDateTime time;
     public Message(){}
 
     public Message(String text, String tag, User author) {
         this.text = text;
         this.tag = tag;
         this.author = author;
+    }
+
+    public LocalDateTime getTime() {
+        return time;
+    }
+//    public String getTimeFromLastUpdate(){
+//        ZoneId zoneId = ZoneId.systemDefault();
+//        Long timeBetween = LocalDateTime.now().atZone(zoneId).toEpochSecond() - getTime().atZone(zoneId).toEpochSecond();
+//        LocalDateTime.ofEpochSecond(timeBetween, timeBetween, zoneId);
+//
+//    }
+    public void setTime(LocalDateTime time) {
+        this.time = time;
+    }
+    public String getFormattedTime(){
+        return getTime() == null?"none":getTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm"));
     }
 
     public String getFilename() {

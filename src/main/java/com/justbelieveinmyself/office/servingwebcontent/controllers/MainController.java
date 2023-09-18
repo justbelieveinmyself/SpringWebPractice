@@ -33,8 +33,6 @@ import java.util.*;
 @Controller
 public class MainController {
     @Autowired
-    private MessageRepository messageRepository;
-    @Autowired
     private MessageService messageService;
     @Value("${upload.path}")
     private String uploadPath;
@@ -42,8 +40,7 @@ public class MainController {
     @GetMapping("/main")
     public String main(@RequestParam(required = false) String filter
             , Map<String, Object> model
-            , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
-
+            , @PageableDefault(sort = {"time"}, direction = Sort.Direction.DESC) Pageable pageable){
         Page<Message> page = messageService.getMessageList(filter, pageable);
         model.put("page", page);
         model.put("url", "/main");
@@ -56,7 +53,7 @@ public class MainController {
             , BindingResult bindingResult
             , Model model
             , @RequestParam("file") MultipartFile file
-            , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) throws IOException {
+            , @PageableDefault(sort = {"time"}, direction = Sort.Direction.DESC) Pageable pageable) throws IOException {
         message.setAuthor(user);
         if(bindingResult.hasErrors()){
             Map<String, String> errorsMap = ControllerUtil.getErrorsMap(bindingResult);
@@ -65,6 +62,7 @@ public class MainController {
         }else {
             saveFile(message, file);
             model.addAttribute("message", null);
+            message.setTime(LocalDateTime.now());
             messageService.save(message);
         }
         Page<Message> messages = messageService.getMessageList(null, pageable);
@@ -102,7 +100,7 @@ public class MainController {
             , @PathVariable User user
             , Model model
             , @RequestParam(required = false) Message message
-            , @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable){
+            , @PageableDefault(sort = {"time"}, direction = Sort.Direction.DESC) Pageable pageable){
         Page<Message> page = messageService.findByAuthor(user, pageable);
         model.addAttribute("userChannel", user);
         model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
@@ -135,6 +133,7 @@ public class MainController {
             if(!file.isEmpty()) {
                 saveFile(message, file);
             }
+            message.setTime(LocalDateTime.now());
             messageService.save(message);
         }
         return "redirect:/user-messages/" + user;
