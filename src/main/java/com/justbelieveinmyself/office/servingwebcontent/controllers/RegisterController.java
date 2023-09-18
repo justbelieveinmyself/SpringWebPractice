@@ -5,6 +5,7 @@ import com.justbelieveinmyself.office.servingwebcontent.domain.dto.CaptchaRespon
 import com.justbelieveinmyself.office.servingwebcontent.services.JpaUserDetailsService;
 import io.micrometer.common.util.StringUtils;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,13 +21,10 @@ public class RegisterController {
     private final static String CAPTCHA_URL = "https://www.google.com/recaptcha/api/siteverify?secret=%s&response=%s";
     @Value("${recaptcha.secret}")
     private String secret;
-    private final RestTemplate restTemplate;
-    private final JpaUserDetailsService jpaUserDetailsService;
-
-    public RegisterController(RestTemplate restTemplate, JpaUserDetailsService jpaUserDetailsService) {
-        this.restTemplate = restTemplate;
-        this.jpaUserDetailsService = jpaUserDetailsService;
-    }
+    @Autowired
+    private RestTemplate restTemplate;
+    @Autowired
+    private JpaUserDetailsService jpaUserDetailsService;
 
     @GetMapping("/registration")
     public String register(){
