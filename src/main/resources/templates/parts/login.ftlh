@@ -69,7 +69,7 @@
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <button type="submit" class="btn btn-primary mb-2"><#if isRegisterForm>Create<#else>Sign in</#if></button> </br>
-        <#if !isRegisterForm><a href = "registration">No account?</a></#if>
+        <#if !isRegisterForm><a href = "registration" data-turbolinks="false">No account?</a></#if>
 </form>
 </#macro>
 
