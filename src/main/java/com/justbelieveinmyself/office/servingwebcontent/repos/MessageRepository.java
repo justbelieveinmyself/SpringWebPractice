@@ -19,5 +19,5 @@ public interface MessageRepository extends CrudRepository<Message, Long> {
     @Query("select new com.justbelieveinmyself.office.servingwebcontent.domain.dto.MessageDto(m, count(ml), sum(case when ml = :user then 1 else 0 end) > 0) from Message m left join m.likes ml group by m")
     Page<MessageDto> findAll(@Param("user") User user, Pageable pageable);
     @Query("select new com.justbelieveinmyself.office.servingwebcontent.domain.dto.MessageDto(m, count(ml), sum(case when ml = :user then 1 else 0 end) > 0) from Message m left join m.likes ml where m.author = :author group by m")
-    Page<MessageDto> findByAuthor(@Param("author") User author, @Param("user") User user, Pageable pageable);
+    Page<MessageDto> findByAuthor(@Param("user") User user, @Param("author") User author, Pageable pageable);
 }

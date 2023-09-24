@@ -1,4 +1,5 @@
 <#macro pager url page>
+
     <div>
         <#if page.getTotalPages() gt 7>
         <#assign
@@ -18,6 +19,7 @@
             >
         </#if>
         <#nested>
+    <#if page.getTotalPages() gt 1>
         <ul class="pagination mt-1">
             <#list body as p>
             <#if p == page.getNumber()+1>
@@ -29,5 +31,7 @@
             </#if>
             </#list>
         </ul>
+    </#if>
     </div>
+
 </#macro>

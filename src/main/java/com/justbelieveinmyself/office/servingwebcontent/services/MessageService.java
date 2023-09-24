@@ -4,7 +4,6 @@ import com.justbelieveinmyself.office.servingwebcontent.domain.Message;
 import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.domain.dto.MessageDto;
 import com.justbelieveinmyself.office.servingwebcontent.repos.MessageRepository;
-import jakarta.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -24,5 +23,9 @@ public class MessageService {
 
     public void save(Message message) {
         messageRepository.save(message);
+    }
+
+    public void delete(Message message) {
+        messageRepository.delete(message);
     }
 }

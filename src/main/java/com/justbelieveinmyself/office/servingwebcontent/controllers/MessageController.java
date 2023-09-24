@@ -18,8 +18,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -122,9 +120,22 @@ public class MessageController {
             likes.add(user);
         }
         messageService.save(message);
-        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
-        components.getQueryParams().entrySet().forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
+        return ControllerUtil.getRedirectPath(redirectAttributes, referer);
+    }
 
-        return "redirect:" + components.getPath();
+
+
+    @GetMapping("/messages/{message}/delete")
+    public String deleteMessage(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable Message message,
+            RedirectAttributes redirectAttributes,
+            @RequestHeader(required = false) String referer
+    ){
+        if(message.getAuthor().equals(currentUser)) {
+            messageService.delete(message);
+        }
+
+        return ControllerUtil.getRedirectPath(redirectAttributes, referer);
     }
 }

@@ -34,7 +34,7 @@ public class MainControllerTest {
         mockMvc.perform(get("/main"))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(SecurityMockMvcResultMatchers.authenticated())
-                .andExpect(xpath("//*[@id='navbarSupportedContent']/div[1]/strong")
+                .andExpect(xpath("//*[@id='navbarNav']/div[1]/strong")
                         .string("user"));
     }
     @Test

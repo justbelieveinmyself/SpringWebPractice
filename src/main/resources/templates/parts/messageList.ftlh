@@ -19,7 +19,7 @@
         </div>
         <div class="card-footer container">
             <div class="row align-items-center" style="height: 80px">
-                <small class="text-body-secondary col-6 align-self-center pb-3"><br> Last update: </br> ${message.getFormattedTime()}</small>
+                <small class="text-body-secondary col-5 align-self-center pb-3"><br> Last update: </br> ${message.getFormattedTime()}</small>
             <a href="/messages/${message.id}/like" style="text-decoration: none; color: red;" class="col align-self-center">
                 ${message.likes}
             <#if message.meLiked>
@@ -29,9 +29,14 @@
             </#if>
                 </a>
             <#if currentUserId == message.author.id>
-            <a class="btn btn-info col"  href="/user-messages/${message.author.id}?message=${message.id}">
+                <div class="row align-items-center col">
+            <a class="btn btn-info col mb-1 "  href="/user-messages/${message.author.id}?message=${message.id}">
                 Edit
             </a>
+            <a class="btn btn-info col"  href="/messages/${message.id}/delete">
+                Delete
+            </a>
+                </div>
         </#if>
             </div>
             </div>

@@ -5,8 +5,6 @@ import com.justbelieveinmyself.office.servingwebcontent.domain.User;
 import com.justbelieveinmyself.office.servingwebcontent.domain.util.MessageHelper;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MessageDto {
     private Long id;
